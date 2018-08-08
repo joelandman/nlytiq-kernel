@@ -14,6 +14,11 @@ PARALLEL	:= $(shell lscpu -p | wc -l)
 
 KERNELP		= ${KERNELSOURCE}${RC}
 
+#####
+# CVE processing if needed
+cves =  $(shell find source/ -type f | grep -i cve | grep patch$ )
+
+
 all:	rpm deb
 	touch all
 
@@ -43,6 +48,12 @@ kpatched: linux-${KERNELP}
 ifneq ($(REL),".0")
 	cd linux-${KERNELP} ; xzcat ../source/${KPATCH} | patch -p1
 endif
+# deal with any cve-*.patch files in ../source
+	cd linux-${KERNELP} ;	   \
+	for cvepatch in $(cves) ; do    \
+	    patch -p1 < ../$$cvepatch ; \
+	done
+
 	touch kpatched
 
 linux-${KERNELP}:
