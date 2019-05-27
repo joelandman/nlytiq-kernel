@@ -63,4 +63,4 @@ linux-${KERNELP}:
 clean:
 	rm -rf rpm deb all kpatched configured mkspeced untarred-kernel ubuntu-package
 	rm -rf linux-${KERNELP} linux-source-${KVERSION}.tar.gz
-	rm -f *.deb *.dsc *Custom.tar.gz *.changes perf-*gz linux*.tar.gz
+	rm -f *.deb *.dsc *Custom.tar.gz *.changes perf-*gz linux*.tar.gz *diff.gz *buildinfo
