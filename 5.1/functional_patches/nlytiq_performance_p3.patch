@@ -1,0 +1,11 @@
+--- linux-3.13.original/drivers/md/raid5.h	2014-02-09 12:28:21.156336000 -0500
++++ linux-3.13/drivers/md/raid5.h	2014-02-09 12:28:34.826336000 -0500
+@@ -69,7 +69,7 @@
+  * Stripe cache
+  */
+ 
+-#define NR_STRIPES		256
++#define NR_STRIPES		8192
+ #define STRIPE_SIZE		PAGE_SIZE
+ #define STRIPE_SHIFT		(PAGE_SHIFT - 9)
+ #define STRIPE_SECTORS		(STRIPE_SIZE>>9)

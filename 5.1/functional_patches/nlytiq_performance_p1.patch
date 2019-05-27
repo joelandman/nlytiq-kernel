@@ -1,0 +1,38 @@
+diff -uNr linux-3.2-rc6.original/drivers/md/md.c linux-3.2-rc6/drivers/md/md.c
+--- linux-3.2-rc6.original/drivers/md/md.c	2011-12-16 21:36:26.000000000 -0500
++++ linux-3.2-rc6/drivers/md/md.c	2011-12-18 13:36:37.254353168 -0500
+@@ -94,8 +94,8 @@
+  * or /sys/block/mdX/md/sync_speed_{min,max}
+  */
+ 
+-static int sysctl_speed_limit_min = 1000;
+-static int sysctl_speed_limit_max = 200000;
++static int sysctl_speed_limit_min = 100000;
++static int sysctl_speed_limit_max = 800000;
+ static inline int speed_min(struct mddev *mddev)
+ {
+ 	return mddev->sync_speed_min ?
+diff -uNr linux-3.2-rc6.original/drivers/md/raid5.c linux-3.2-rc6/drivers/md/raid5.c
+--- linux-3.2-rc6.original/drivers/md/raid5.c	2011-12-16 21:36:26.000000000 -0500
++++ linux-3.2-rc6/drivers/md/raid5.c	2011-12-18 13:58:16.874353249 -0500
+@@ -4314,7 +4314,7 @@
+ 	struct r5conf *conf = mddev->private;
+ 	int err;
+ 
+-	if (size <= 16 || size > 32768)
++	if (size <= 16 || size > 1048576)
+ 		return -EINVAL;
+ 	while (size < conf->max_nr_stripes) {
+ 		if (drop_one_stripe(conf))
+diff -uNr linux-3.2-rc6.original/include/linux/blkdev.h linux-3.2-rc6/include/linux/blkdev.h
+--- linux-3.2-rc6.original/include/linux/blkdev.h	2011-12-16 21:36:26.000000000 -0500
++++ linux-3.2-rc6/include/linux/blkdev.h	2011-12-18 13:54:18.774348259 -0500
+@@ -961,7 +961,7 @@
+ extern int blk_verify_command(unsigned char *cmd, fmode_t has_write_perm);
+ 
+ enum blk_default_limits {
+-	BLK_MAX_SEGMENTS	= 128,
++	BLK_MAX_SEGMENTS	= 256,
+ 	BLK_SAFE_MAX_SECTORS	= 255,
+ 	BLK_DEF_MAX_SECTORS	= 1024,
+ 	BLK_MAX_SEGMENT_SIZE	= 65536,
